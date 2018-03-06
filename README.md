@@ -12,8 +12,6 @@
 [![Daily Downloads](https://poser.pugx.org/traderinteractive/filter-arrays/d/daily)](https://packagist.org/packages/traderinteractive/filter-arrays)
 [![Monthly Downloads](https://poser.pugx.org/traderinteractive/filter-arrays/d/monthly)](https://packagist.org/packages/traderinteractive/filter-arrays)
 
-[![Documentation](https://img.shields.io/badge/reference-phpdoc-blue.svg?style=flat)](https://traderinteractive.github.io/filter-arrays-php/)
-
 A filtering implementation for verifying correct data and performing typical modifications to arrays
 
 ## Requirements
