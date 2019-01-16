@@ -119,4 +119,32 @@ final class ArraysTest extends TestCase
     {
         $this->assertSame([1, 2, 3, 4, 5], Arrays::flatten([[1, 2], [[3, [4, 5]]]]));
     }
+
+    /**
+     * @test
+     * @covers ::arrayize
+     */
+    public function arrayizeReturnsInputIfItIsAnArray()
+    {
+        $this->assertSame([1, 2, 3, 4, 5], Arrays::arrayize([1, 2, 3, 4, 5]));
+    }
+
+    /**
+     * @test
+     * @covers ::arrayize
+     */
+    public function arrayizeWrapsNonArrayValue()
+    {
+        $value = new \StdClass();
+        $this->assertSame([$value], Arrays::arrayize($value));
+    }
+
+    /**
+     * @test
+     * @covers ::arrayize
+     */
+    public function arrayizeConvertsNullToEmptyArray()
+    {
+        $this->assertSame([], Arrays::arrayize(null));
+    }
 }
