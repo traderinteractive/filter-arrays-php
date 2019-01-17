@@ -86,4 +86,24 @@ final class Arrays
 
         return $result;
     }
+
+    /**
+     * Converts any non-array value to a single element array.
+     *
+     * @param mixed $value The value to convert.
+     *
+     * @return array The coverted array or the original value.
+     */
+    public static function arrayize($value) : array
+    {
+        if ($value === null) {
+            return [];
+        }
+
+        if (!is_array($value)) {
+            return [$value];
+        }
+
+        return $value;
+    }
 }
