@@ -91,7 +91,7 @@ final class Arrays
      *
      * @param mixed $value The value to convert.
      *
-     * @return array The coverted array or the original value.
+     * @return array The converted array or the original value.
      */
     public static function arrayize($value) : array
     {
