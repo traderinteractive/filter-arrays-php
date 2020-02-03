@@ -7,7 +7,7 @@
         "filter"
     ],
     "license": "MIT",
-    "configure": {
+    "config": {
         "sort-packages": true
     },
     "require": {
@@ -20,8 +20,8 @@
         }
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.2",
+        "php-coveralls/php-coveralls": "^2.1",
         "phpunit/phpunit": "^6.5",
-        "php-coveralls/php-coveralls": "^2.1"
+        "squizlabs/php_codesniffer": "^3.2"
     }
 }
