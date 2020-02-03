@@ -2,6 +2,7 @@
 
 namespace TraderInteractive\Filter;
 
+use InvalidArgumentException;
 use TraderInteractive\Exceptions\FilterException;
 
 /**
@@ -103,5 +104,34 @@ final class Arrays
         }
 
         return $value;
+    }
+
+    /**
+     * Filter to extract a single element from a given array by key.
+     *
+     * @param array      $input    The array containing the element to extract.
+     * @param int|string $key      The index of the element to extract.
+     * @param bool       $required Flag to throw exception if the requested key does not exist.
+     *
+     * @return mixed
+     *
+     * @throws FilterException Thrown if element cannot be extracted from the array
+     * @throws InvalidArgumentException Thrown if $key is not a valid array index.
+     */
+    public static function extract(array $input, $key, bool $required = true)
+    {
+        if (!is_string($key) && !is_int($key)) {
+            throw new InvalidArgumentException('$key was not a string or integer');
+        }
+
+        if (array_key_exists($key, $input)) {
+            return $input[$key];
+        }
+
+        if ($required) {
+            throw new FilterException("Array did not contain element at index '{$key}'");
+        }
+
+        return null;
     }
 }

@@ -147,4 +147,58 @@ final class ArraysTest extends TestCase
     {
         $this->assertSame([], Arrays::arrayize(null));
     }
+
+    /**
+     * @test
+     * @covers ::extract
+     */
+    public function extractKeyNotRequired()
+    {
+        $input = ['a', 'b', 'color' => 'green', 'shape' => 'trapezoid', 4];
+        $this->assertNull(Arrays::extract($input, 'foo', false));
+    }
+
+    /**
+     * @test
+     * @covers ::extract
+     * @expectedException \TraderInteractive\Exceptions\FilterException
+     * @expectedExceptionMessage Array did not contain element at index 'foo'
+     */
+    public function extractKeyRequired()
+    {
+        $input = ['a', 'b', 'color' => 'green', 'shape' => 'trapezoid', 4];
+        Arrays::extract($input, 'foo', true);
+    }
+
+    /**
+     * @test
+     * @covers ::extract
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage $key was not a string or integer
+     */
+    public function extractKeyNotStringOrInteger()
+    {
+        $input = ['a', 'b', 'color' => 'green', 'shape' => 'trapezoid', 4];
+        Arrays::extract($input, false);
+    }
+
+    /**
+     * @test
+     * @covers ::extract
+     */
+    public function extractKeyIsString()
+    {
+        $input = ['a', 'b', 'color' => 'green', 'shape' => 'trapezoid', 4];
+        $this->assertSame($input['shape'], Arrays::extract($input, 'shape'));
+    }
+
+    /**
+     * @test
+     * @covers ::extract
+     */
+    public function extractKeyIsInteger()
+    {
+        $input = ['a', 'b', 'color' => 'green', 'shape' => 'trapezoid', 4];
+        $this->assertSame($input[1], Arrays::extract($input, 1));
+    }
 }
