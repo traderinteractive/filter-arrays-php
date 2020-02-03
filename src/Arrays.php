@@ -77,13 +77,11 @@ final class Arrays
     {
         $result = [];
 
-        array_walk_recursive(
-            $value,
-            function ($item) use (&$result) {
-                $result[] = $item;
-            }
-        );
+        $callable = function ($item) use (&$result) {
+            $result[] = $item;
+        };
 
+        array_walk_recursive($value, $callable);
         return $result;
     }
 
