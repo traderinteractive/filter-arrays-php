@@ -28,6 +28,26 @@ composer require traderinteractive/filter-arrays
 
 ## Included Filters
 
+#### Arrays::copy
+This filter will copy values from the input array into the resulting array using the destination key map.
+```php
+$input = ['foo' => 1, 'bar' => 2];
+$keyMap = ['FOO_VALUE' => 'foo', 'BAR_VALUE' => 'bar'];
+$result = \TraderInteractive\Filter\Arrays::copy($input, $keyMap);
+assert($result === ['FOO_VALUE' => 1, 'BAR_VALUE' => 2]);
+```
+
+#### Arrays::copyEach
+This filter will copy values from each array within the input array into the resulting array using the destination key map.
+```php
+$input = [
+    ['foo' => 1, 'bar' => 2],
+    ['foo' => 3, 'bar' => 4],
+];
+$keyMap = ['FOO_VALUE' => 'foo', 'BAR_VALUE' => 'bar'];
+$result = \TraderInteractive\Filter\Arrays::copyEach($input, $keyMap);
+assert($result === [['FOO_VALUE' => 1, 'BAR_VALUE' => 2], ['FOO_VALUE' => 3, 'BAR_VALUE' => 4]]);
+```
 #### Arrays::in
 This filter is a wrapper around `in_array` including support for strict equality testing.
 
