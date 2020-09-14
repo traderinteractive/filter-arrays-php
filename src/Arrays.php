@@ -2,6 +2,7 @@
 
 namespace TraderInteractive\Filter;
 
+use InvalidArgumentException;
 use TraderInteractive\Exceptions\FilterException;
 
 /**
@@ -9,6 +10,16 @@ use TraderInteractive\Exceptions\FilterException;
  */
 final class Arrays
 {
+    /**
+     * @var int
+     */
+    const ARRAY_PAD_END = 1;
+
+    /**
+     * @var int
+     */
+    const ARRAY_PAD_FRONT = 2;
+
     /**
      * Filter an array by throwing if not an array or count not in the min/max range.
      *
@@ -148,5 +159,34 @@ final class Arrays
         }
 
         return $result;
+    }
+
+    /**
+     * Pad array to the specified length with a value. Padding optionally to the front or end of the array.
+     *
+     * @param array $input    Initial array of values to pad.
+     * @param int   $size     The new size of the array.
+     * @param mixed $padValue Value to pad if $input is less than $size.
+     * @param int   $padType  Optional argument to specify which end of the array to pad.
+     *
+     * @return array Returns a copy of the $input array padded to size specified by $size with value $padValue
+     *
+     * @throws InvalidArgumentException Thrown if $padType is invalid.
+     */
+    public static function pad(array $input, int $size, $padValue = null, int $padType = self::ARRAY_PAD_END) : array
+    {
+        if ($padType === self::ARRAY_PAD_END) {
+            return array_pad($input, $size, $padValue);
+        }
+
+        if ($padType !== self::ARRAY_PAD_FRONT) {
+            throw new InvalidArgumentException('Invalid $padType value provided');
+        }
+
+        while (count($input) < $size) {
+            array_unshift($input, $padValue);
+        }
+
+        return $input;
     }
 }
