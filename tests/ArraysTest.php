@@ -147,4 +147,55 @@ final class ArraysTest extends TestCase
     {
         $this->assertSame([], Arrays::arrayize(null));
     }
+
+    /**
+     * @test
+     * @covers ::copy
+     */
+    public function copy()
+    {
+        $source = ['foo' => 1, 'bar' => 2, 'extra' => 3];
+        $keyMap = [
+            'far' => 'foo',
+            'bar',
+        ];
+        $result = Arrays::copy($source, $keyMap);
+        $this->assertSame(
+            [
+                'far' => $source['foo'],
+                'bar' => $source['bar'],
+            ],
+            $result
+        );
+    }
+
+    /**
+     * @test
+     * @covers ::copyEach
+     */
+    public function copyEach()
+    {
+        $input = [
+            ['foo' => 1, 'bar' => 2],
+            ['foo' => 3, 'bar' => 4],
+        ];
+        $keyMap = [
+            'far' => 'foo',
+            'bar',
+        ];
+        $result = Arrays::copyEach($input, $keyMap);
+        $this->assertSame(
+            [
+                [
+                    'far' => 1,
+                    'bar' => 2,
+                ],
+                [
+                    'far' => 3,
+                    'bar' => 4,
+                ],
+            ],
+            $result
+        );
+    }
 }

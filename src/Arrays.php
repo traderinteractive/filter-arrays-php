@@ -77,12 +77,11 @@ final class Arrays
     {
         $result = [];
 
-        array_walk_recursive(
-            $value,
-            function ($item) use (&$result) {
-                $result[] = $item;
-            }
-        );
+        $callBack = function ($item) use (&$result) {
+            $result[] = $item;
+        };
+
+        array_walk_recursive($value, $callBack);
 
         return $result;
     }
@@ -105,5 +104,49 @@ final class Arrays
         }
 
         return $value;
+    }
+
+    /**
+     * Copies values from the $source array into a new array using the $keyMap for destination keys.
+     *
+     * @param array[] $source The arrays with values to be copied.
+     * @param array   $keyMap mapping of dest keys to source keys. If $keyMap is associative, the keys will be the
+     *                        destination keys. If numeric the values will be the destination keys
+     *
+     * @return array
+     */
+    public static function copyEach(array $source, array $keyMap) : array
+    {
+        $result = [];
+        foreach ($source as $sourceArray) {
+            $result[] = self::copy($sourceArray, $keyMap);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Copies values from the $source array into a new array using the $keyMap for destination keys.
+     *
+     * @param array $source The array with values to be copied.
+     * @param array $keyMap mapping of dest keys to source keys. If $keyMap is associative, the keys will be the
+     *                      destination keys. If numeric the values will be the destination keys
+     *
+     * @return array
+     */
+    public static function copy(array $source, array $keyMap) : array
+    {
+        $result = [];
+        foreach ($keyMap as $destinationKey => $sourceKey) {
+            if (is_int($destinationKey)) {
+                $destinationKey = $sourceKey;
+            }
+
+            if (array_key_exists($sourceKey, $source)) {
+                $result[$destinationKey] = $source[$sourceKey];
+            }
+        }
+
+        return $result;
     }
 }
