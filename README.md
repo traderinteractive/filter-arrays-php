@@ -75,6 +75,15 @@ $value = \TraderInteractive\Filter\Arrays::flatten([[1, 2], [3, [4, 5]]]);
 assert($value === [1, 2, 3, 4, 5]);
 ```
 
+#### Arrays::pad
+
+This filter pads an array to the specified length with a value. Padding optionally to the front or end of the array.
+
+```php
+$value = \TraderInteractive\Filter\Arrays::pad([1, 2], 5, 0, \TraderInteractive\Filter\Arrays::ARRAY_PAD_FRONT);
+assert($value === [0, 0, 0, 1, 2]);
+```
+
 ## Project Build
 
 With a checkout of the code get [Composer](http://getcomposer.org) in your PATH and run:

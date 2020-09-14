@@ -2,6 +2,7 @@
 
 namespace TraderInteractive\Filter;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use TraderInteractive\Exceptions\FilterException;
 
@@ -197,5 +198,46 @@ final class ArraysTest extends TestCase
             ],
             $result
         );
+    }
+
+    /**
+     * @test
+     * @covers ::pad
+     */
+    public function pad()
+    {
+        $result = Arrays::pad([12, 10, 9], 5, 0);
+        $this->assertSame([12, 10, 9, 0, 0], $result);
+    }
+
+    /**
+     * @test
+     * @covers ::pad
+     */
+    public function padArrayLengthGreaterThanSize()
+    {
+        $result = Arrays::pad(['a', 'b', 'c'], 2, 0);
+        $this->assertSame(['a', 'b', 'c'], $result);
+    }
+
+    /**
+     * @test
+     * @covers ::pad
+     */
+    public function padFront()
+    {
+        $result = Arrays::pad(['a', 'b', 'c'], 5, null, Arrays::ARRAY_PAD_FRONT);
+        $this->assertSame([null, null, 'a', 'b', 'c'], $result);
+    }
+
+    /**
+     * @test
+     * @covers ::pad
+     */
+    public function padInvalidPadType()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid $padType value provided');
+        Arrays::pad(['a', 'b', 'c'], 5, null, 0);
     }
 }
