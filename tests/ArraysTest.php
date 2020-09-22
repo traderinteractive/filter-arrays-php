@@ -5,9 +5,11 @@ namespace TraderInteractive\Filter;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use TraderInteractive\Exceptions\FilterException;
+use TraderInteractive\Filter\Exceptions\DuplicateValuesException;
 
 /**
  * @coversDefaultClass \TraderInteractive\Filter\Arrays
+ * @covers ::<private>
  */
 final class ArraysTest extends TestCase
 {
@@ -239,5 +241,30 @@ final class ArraysTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid $padType value provided');
         Arrays::pad(['a', 'b', 'c'], 5, null, 0);
+    }
+
+    /**
+     * @test
+     * @covers ::unique
+     */
+    public function unique()
+    {
+        $input = ['foo', 'bar', 'foo'];
+        $filteredValue = Arrays::unique($input);
+        $this->assertSame(['foo', 'bar'], $filteredValue);
+    }
+
+    /**
+     * @test
+     * @covers ::unique
+     */
+    public function uniqueStrict()
+    {
+        $input = ['foo', 'bar', 'foo'];
+        $expectedDuplicates = ['2' => 'foo'];
+        $expectedException = new DuplicateValuesException($expectedDuplicates);
+        $this->expectException(DuplicateValuesException::class);
+        $this->expectExceptionMessage($expectedException->getMessage());
+        Arrays::unique($input, Arrays::ARRAY_UNIQUE_SORT_STRING, true);
     }
 }

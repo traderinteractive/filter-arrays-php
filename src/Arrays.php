@@ -4,6 +4,7 @@ namespace TraderInteractive\Filter;
 
 use InvalidArgumentException;
 use TraderInteractive\Exceptions\FilterException;
+use TraderInteractive\Filter\Exceptions\DuplicateValuesException;
 
 /**
  * A collection of filters for arrays.
@@ -19,6 +20,26 @@ final class Arrays
      * @var int
      */
     const ARRAY_PAD_FRONT = 2;
+
+    /**
+     * @var int
+     */
+    const ARRAY_UNIQUE_SORT_REGULAR = \SORT_REGULAR;
+
+    /**
+     * @var int
+     */
+    const ARRAY_UNIQUE_SORT_NUMERIC = \SORT_NUMERIC;
+
+    /**
+     * @var int
+     */
+    const ARRAY_UNIQUE_SORT_STRING = \SORT_STRING;
+
+    /**
+     * @var int
+     */
+    const ARRAY_UNIQUE_SORT_LOCALE_STRING = \SORT_LOCALE_STRING;
 
     /**
      * Filter an array by throwing if not an array or count not in the min/max range.
@@ -188,5 +209,46 @@ final class Arrays
         }
 
         return $input;
+    }
+
+    /**
+     * Removes duplicate values from an array.
+     *
+     * @param array $input     The array to be filtered.
+     * @param int   $sortFlags Optional parameter used to modify the sorting behavior.
+     * @param bool  $strict    If set to TRUE the filter will throw exception if the $input array contains duplicates.
+     *
+     * @return array
+     *
+     * @throws FilterException Thrown if the array contains duplicates and $strict is true.
+     */
+    public static function unique(
+        array $input,
+        int $sortFlags = self::ARRAY_UNIQUE_SORT_REGULAR,
+        bool $strict = false
+    ) : array {
+        $unique = array_unique($input, $sortFlags);
+        if ($unique !== $input && $strict === true) {
+            $duplicateValues = self::findDuplicates($input);
+            throw new DuplicateValuesException($duplicateValues);
+        }
+
+        return $unique;
+    }
+
+    private static function findDuplicates(array $input) : array
+    {
+        $temp = [];
+        $duplicates = [];
+        foreach ($input as $key => $value) {
+            if (!in_array($value, $temp, true)) {
+                $temp[] = $value;
+                continue;
+            }
+
+            $duplicates[$key] = $value;
+        }
+
+        return $duplicates;
     }
 }
