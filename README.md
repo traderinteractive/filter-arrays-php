@@ -84,6 +84,15 @@ $value = \TraderInteractive\Filter\Arrays::pad([1, 2], 5, 0, \TraderInteractive\
 assert($value === [0, 0, 0, 1, 2]);
 ```
 
+#### Arrays::unique
+
+This filter removes any duplicate values in the given array. Optionally throwing an exception if duplicate values are found.
+
+```php
+$value = \TraderInteractive\Filter\Arrays::unique(['foo', 'bar', 'foo']);
+assert($value === ['foo', 'bar']);
+```
+
 ## Project Build
 
 With a checkout of the code get [Composer](http://getcomposer.org) in your PATH and run:
