@@ -25,44 +25,44 @@ final class ArraysTest extends TestCase
     /**
      * @test
      * @covers ::filter
-     * @expectedException \TraderInteractive\Exceptions\FilterException
-     * @expectedExceptionMessage Value '1' is not an array
      */
     public function filterFailNotArray()
     {
+        $this->expectException(\TraderInteractive\Exceptions\FilterException::class);
+        $this->expectExceptionMessage("Value '1' is not an array");
         Arrays::filter(1);
     }
 
     /**
      * @test
      * @covers ::filter
-     * @expectedException \TraderInteractive\Exceptions\FilterException
-     * @expectedExceptionMessage $value count of 0 is less than 1
      */
     public function filterFailEmpty()
     {
+        $this->expectException(\TraderInteractive\Exceptions\FilterException::class);
+        $this->expectExceptionMessage('$value count of 0 is less than 1');
         Arrays::filter([]);
     }
 
     /**
      * @test
      * @covers ::filter
-     * @expectedException \TraderInteractive\Exceptions\FilterException
-     * @expectedExceptionMessage $value count of 1 is less than 2
      */
     public function filterCountLessThanMin()
     {
+        $this->expectException(\TraderInteractive\Exceptions\FilterException::class);
+        $this->expectExceptionMessage('$value count of 1 is less than 2');
         Arrays::filter([0], 2);
     }
 
     /**
      * @test
      * @covers ::filter
-     * @expectedException \TraderInteractive\Exceptions\FilterException
-     * @expectedExceptionMessage $value count of 2 is greater than 1
      */
     public function filterCountGreaterThanMax()
     {
+        $this->expectException(\TraderInteractive\Exceptions\FilterException::class);
+        $this->expectExceptionMessage('$value count of 2 is greater than 1');
         Arrays::filter([0, 1], 1, 1);
     }
 
