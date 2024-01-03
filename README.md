@@ -75,6 +75,14 @@ $value = \TraderInteractive\Filter\Arrays::flatten([[1, 2], [3, [4, 5]]]);
 assert($value === [1, 2, 3, 4, 5]);
 ```
 
+#### Arrays::implode
+
+This filter is a wrapper to the PHP `implode` function. It joins an array of strings with the optional glue string. 
+```php
+$value = \TraderInteractive\Filter\Arrays::implode(['lastname', 'email', 'phone'], ',');
+assert($value === 'lastname,email,phone');
+```
+
 #### Arrays::pad
 
 This filter pads an array to the specified length with a value. Padding optionally to the front or end of the array.
