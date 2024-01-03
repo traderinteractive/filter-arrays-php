@@ -267,4 +267,25 @@ final class ArraysTest extends TestCase
         $this->expectExceptionMessage($expectedException->getMessage());
         Arrays::unique($input, Arrays::ARRAY_UNIQUE_SORT_STRING, true);
     }
+
+    /**
+     * @test
+     * @covers ::implode
+     */
+    public function implodeWithGlue()
+    {
+        $glue = '_';
+        $input = [0, 1, 2];
+        $this->assertSame('0_1_2', Arrays::implode($input, $glue));
+    }
+
+    /**
+     * @test
+     * @covers ::implode
+     */
+    public function implodeWithDefaultGlue()
+    {
+        $input = ['a', 'b', 'c'];
+        $this->assertSame('abc', Arrays::implode($input));
+    }
 }

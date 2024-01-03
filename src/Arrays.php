@@ -212,6 +212,19 @@ final class Arrays
     }
 
     /**
+     * Joins array elements with a string.
+     *
+     * @param array  $input The array to be filtered.
+     * @param string $glue  The string to which each array element should be joined.
+     *
+     * @return string
+     */
+    public static function implode(array $input, string $glue = '') : string
+    {
+        return implode($glue, $input);
+    }
+
+    /**
      * Removes duplicate values from an array.
      *
      * @param array $input     The array to be filtered.
